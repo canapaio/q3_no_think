@@ -1,2 +1,2 @@
-# q3_no_think
-Qwen3_no_think
+# Qwen3 /no_think
+Qwen3 /no_think
