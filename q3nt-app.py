@@ -11,5 +11,5 @@ def before_cat_reads_message(user_message, cat):
 @hook(priority=-10)
 def before_cat_sends_message(message, cat):
     settings = cat.mad_hatter.get_plugin().load_settings()
-    message = re.sub(r'<think>.*?</think>', '', message)
+    message = re.sub(r'<think>.*?</think>', '', message["content"])
     return message
