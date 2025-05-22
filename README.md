@@ -1,123 +1,100 @@
-No Think Plugin for Cat (Qwen3) v0.0.1.002
+'''markdown
+# No Think Plugin for The Cat (Qwen3) v0.0.1.002
 
-This plugin is designed to interact with The Cat AI framework , specifically to handle and modify messages before they are processed by or returned from the Qwen3 language model . 
-🎯 Purpose 
+This plugin is designed to suppress and clean internal thinking steps (e.g., `Thinking: ...`) from the responses of language models like **Qwen3**, ensuring that users only receive the final result without seeing the model's reasoning process.
 
-This plugin allows you to: 
+It also allows you to prepend a `/no_think` command to user messages, so the LLM avoids generating verbose internal thoughts in the first place.
 
-    Prepend /no_think to user input 
-    Strip /no_think from memory storage 
-    Remove internal thinking blocks (Thinking: ... or similar markers) from the final response 
-    Modify query before recalling memories 
-     
+---
 
-It is particularly useful when working with models like Qwen3 , which may use special tokens or patterns (like /think or Thinking:) to indicate internal reasoning steps that should not be shown to the user. 
-🔧 Features 
-1. before_cat_reads_message 
+## 🎯 Purpose
 
-Adds /no_think at the beginning of a message if enabled in settings. This tells the model (e.g., Qwen3) not to generate internal thinking steps. 
-python
- 
- 
-1
-user_message_json["text"] = "/no_thinking" + user_message_json["text"]
- 
- 
-2. before_cat_stores_episodic_memory 
+This plugin helps:
+- Prepend `/no_think` to incoming messages
+- Strip `/no_think` before storing in memory or recalling
+- Remove internal thinking blocks (like `Thinking: ... Result:`) from the final output sent to the user
 
-Removes the /no_think prefix before storing the message into memory, so it doesn't pollute history. 
-python
- 
- 
-1
+This is especially useful when working with models like **Qwen3**, which may use special patterns or prefixes to indicate internal thought processes.
+
+---
+
+## 🔧 Features
+
+### 1. `before_cat_reads_message`
+Prepends `/no_think` to the message text if enabled in settings.
+
+```python
+user_message_json["text"] = "/no_think" + user_message_json["text"]
+```
+
+### 2. `before_cat_stores_episodic_memory`
+Removes the `/no_think` prefix before saving the message into episodic memory.
+
+```python
 doc['page_content'] = doc['page_content'][len('/no_think'):]
- 
- 
-3. before_cat_sends_message 
+```
 
-Strips out any internal thinking blocks from the final response using regex, ensuring the user never sees them. 
-python
- 
- 
-1
-message["content"] = re.sub(r'Thinking:.*?Result:', '', message["content"], flags=re.DOTALL)
- 
- 
+### 3. `before_cat_sends_message`
+Strips out any internal thinking blocks using regex from the final response.
 
-    This hides internal reasoning steps like: 
-     
+```python
+message["content"] = re.sub(r'Thinking:.*?Result:', '', message["content"], flags=re.DOTALL | re.IGNORECASE)
+```
 
-     
-    1
-    2
-    Thinking: Let me see...
-    Result: Hello!
-     
-     
-     
+> This hides internal steps like:
+> ```
+> Thinking: I need to find a good joke.
+> Result: Why don't scientists trust atoms? Because they make up everything!
+> ```
 
-4. cat_recall_query 
+### 4. `cat_recall_query`
+Removes `/no_think` before performing memory recall, ensuring clean queries.
 
-Removes /no_think before performing memory recall, so the actual query is clean and effective. 
-python
- 
- 
-1
+```python
 user_message = user_message[len('/no_think'):]
- 
- 
-⚙️ Settings 
+```
 
-Make sure to define these two boolean settings in your plugin configuration: 
+---
 
-    No_Think: If True, prepends /no_think to the input.
-    Remove_Think: If True, removes internal thinking blocks from the output.
-     
+## ⚙️ Settings
 
-✅ Example Use Case 
+In your plugin configuration, define the following boolean settings:
+- `No_Think`: If `True`, adds `/no_think` to the start of each user input.
+- `Remove_Think`: If `True`, removes internal thinking blocks from the model’s output.
 
-With No_Think=True, a user message like: 
- 
- 
-1
+---
+
+## ✅ Example Use Case
+
+With `No_Think=True`, a user message:
+
+```
 Tell me a joke
- 
- 
+```
 
-Becomes: 
- 
- 
-1
+Becomes:
+
+```
 /no_think Tell me a joke
- 
- 
+```
 
-And if Qwen3 returns: 
- 
- 
-1
-2
-Thinking: I need to find a good joke.
-Result: Why don't scientists trust atoms? Because they make up everything!
- 
- 
+If Qwen3 returns:
 
-The plugin will return just: 
- 
- 
-1
-Why don't scientists trust atoms? Because they make up everything!
- 
- 
-🧪 Compatibility 
+```
+Thinking: Let me think of a joke...
+Result: Why did the scarecrow win an award? Because he was outstanding in his field!
+```
 
-This plugin was tested with Qwen3 , but can be adapted for other LLMs that support similar "thinking suppression" via special tokens or prefixes. 
-📦 Installation 
+The plugin will send just this to the user:
 
-To install this plugin: 
+```
+Why did the scarecrow win an award? Because he was outstanding in his field!
+```
 
-    Place it inside your Cat AI plugins folder .
-    Enable it through the Cat dashboard.
-    Configure the settings accordingly.
-     
+---
 
+## 🧪 Compatibility
+
+- Tested with **Qwen3**
+- Can be adapted for other LLMs that use similar internal thinking markers (e.g., `Thinking:`, `Thought:`, etc.)
+'''
