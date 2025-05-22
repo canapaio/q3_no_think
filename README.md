@@ -1,4 +1,3 @@
-'''markdown
 # No Think Plugin for The Cat (Qwen3) v0.0.1.002
 
 This plugin is designed to suppress and clean internal thinking steps (e.g., `Thinking: ...`) from the responses of language models like **Qwen3**, ensuring that users only receive the final result without seeing the model's reasoning process.
@@ -97,4 +96,3 @@ Why did the scarecrow win an award? Because he was outstanding in his field!
 
 - Tested with **Qwen3**
 - Can be adapted for other LLMs that use similar internal thinking markers (e.g., `Thinking:`, `Thought:`, etc.)
-'''
