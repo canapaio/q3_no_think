@@ -9,9 +9,9 @@ It also allows you to prepend a `/no_think` command to user messages, so the LLM
 ## 🎯 Purpose
 
 This plugin helps:
-- Prepend `/no_think` to incoming messages
-- Strip `/no_think` before storing in memory or recalling
-- Remove internal thinking blocks (like `Thinking: ... Result:`) from the final output sent to the user
+- Prepend `/no_think` to incoming messages (Qwen3)
+- Strip `/no_think` before storing in memory or recalling (Qwen3)
+- Remove internal thinking blocks <think> Thinking: ... Result </think> (like `Thinking: ... Result:`) from the final output sent to the user (all R models)
 
 This is especially useful when working with models like **Qwen3**, which may use special patterns or prefixes to indicate internal thought processes.
 
