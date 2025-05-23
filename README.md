@@ -80,8 +80,10 @@ Becomes:
 If Qwen3 returns:
 
 ```
-Thinking: Let me think of a joke...
-Result: Why did the scarecrow win an award? Because he was outstanding in his field!
+<think> 
+Let me think of a joke...
+</think>
+Why did the scarecrow win an award? Because he was outstanding in his field!
 ```
 
 The plugin will send just this to the user:
