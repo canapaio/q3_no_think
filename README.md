@@ -37,7 +37,7 @@ doc['page_content'] = doc['page_content'][len('/no_think'):]
 Strips out any internal thinking blocks using regex from the final response.
 
 ```python
-message["content"] = re.sub(r'Thinking:.*?Result:', '', message["content"], flags=re.DOTALL | re.IGNORECASE)
+message["content"] = re.sub(r'<think>.*?</think>', '', message["content"], flags=re.DOTALL | re.IGNORECASE)
 ```
 
 > This hides internal steps like:
