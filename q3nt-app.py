@@ -50,4 +50,4 @@ def cat_recall_query(user_message, cat):
     if settings['No_Think']:
         if user_message.startswith('/no_think'):
             user_message = user_message[len('/no_think'):]    
-    return user_message
+    return new_query
