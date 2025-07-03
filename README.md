@@ -1,4 +1,4 @@
-# No Think Plugin for The Cat (Qwen3) v0.0.1.002
+# No Think Plugin for The Cat (Qwen3) v0.0.1.005
 
 This plugin is designed to suppress and clean internal thinking steps (e.g., `Thinking: ...`) from the responses of language models like **Qwen3**, ensuring that users only receive the final result without seeing the model's reasoning process.
 
