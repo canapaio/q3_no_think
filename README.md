@@ -4,6 +4,8 @@ This plugin is designed to suppress and clean internal thinking steps (e.g., `Th
 
 It also allows you to prepend a `/no_think` command to user messages, so the LLM avoids generating verbose internal thoughts in the first place.
 
+**Supports dynamic override with :n1: (enable) and :n0: (disable) commands** - allowing users to temporarily override the plugin settings on a per-message basis.
+
 ---
 
 ## 🎯 Purpose
